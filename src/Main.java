@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -12,10 +13,10 @@ public class Main {
         while (true) {
             System.out.println(
                     "----------------------\nChoose a Option" +
-                    "\n1.For SignUp" +
-                    "\n2.For SigIn" +
-                    "\n3.For Exit" +
-                    "\n----------------------");
+                            "\n1.For SignUp" +
+                            "\n2.For SigIn" +
+                            "\n3.For Exit" +
+                            "\n----------------------");
             int opt = sc.nextInt();
             switch (opt) {
                 case 1:

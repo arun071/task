@@ -1,14 +1,13 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         System.out.println("Welcome to Amazon");
         Scanner sc = new Scanner(System.in);
         String email;
         String pass;
-        User user = new User();
-        user.db.put("admin", "pass");
+        User.db.put("admin", "pass");
 
         while (true) {
             System.out.println(
@@ -25,7 +24,16 @@ public class Main {
                     email = sc.next();
                     System.out.println("Enter your Password");
                     pass = sc.next();
-                    user.signUp(email, pass);
+                    if (User.signUp(email, pass))
+                        User.signIn(email, pass);
+                    else {
+                        System.out.println("SignIn Page");
+                        System.out.println("Enter your Email");
+                        email = sc.next();
+                        System.out.println("Enter your Password");
+                        pass = sc.next();
+                        User.signIn(email, pass);
+                    }
                     break;
                 case 2:
                     System.out.println("SignIn Page");
@@ -33,7 +41,7 @@ public class Main {
                     email = sc.next();
                     System.out.println("Enter your Password");
                     pass = sc.next();
-                    user.signIn(email, pass);
+                    User.signIn(email, pass);
                     break;
                 case 3:
                     System.out.println("ThankYou");

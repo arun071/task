@@ -1,58 +1,117 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 
 public class Product {
-    String productName;
-    String category;
-    int availableCount;
-    int price;
+    private String productName;
+    private String category;
+    private int availableCount;
+    private int price;
+    private final int productId;
+    private static int genrateId = 1;
+
+    static ArrayList<Product> productList = new ArrayList<>();
 
 
-    Product(int price, int availableCount, String Category, String productName) {
+    Product(String productName, String Category, int price, int availableCount) {
         this.price = price;
         this.availableCount = availableCount;
         this.category = Category;
         this.productName = productName;
+        this.productId = genrateId++;
     }
 
-    public static void editProduct() {
+    public String getProductName() {
+        return productName;
     }
 
-    public static void deleteProduct() {
+    public String getCategory() {
+        return category;
     }
 
-    public void updatecount(int count) {
-        this.availableCount = count;
+    public int getPrice() {
+        return price;
+    }
 
+    public int getAvailableCount() {
+        return availableCount;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setAvailableCount(int availableCount) {
+        this.availableCount = availableCount;
+    }
+
+
+    private int getProductId() {
+        return productId;
+    }
+
+    public static void addProduct(String productName, String Category, int price, int availableCount) {
+        productList.add(new Product(productName, Category, price, availableCount));
+    }
+
+    public static void editProduct(int inputId, String name, String category, int price, int availableCount) {
+        Product P = null;
+        for (Product item : productList) {
+            if (item.getProductId() == inputId) {
+                P = item;
+            }
+        }
+        if (P != null) {
+            P.setProductName(name);
+            P.setCategory(category);
+            P.setPrice(price);
+            P.setAvailableCount(availableCount);
+        }
+    }
+
+    public static void editProduct(int inputId, int availableCount) {
+        Product P = null;
+        for (Product item : productList) {
+            if (item.getProductId() == inputId) {
+                P = item;
+            }
+        }
+        if (P != null) {
+            P.setAvailableCount(availableCount);
+        }
+    }
+
+    public static void getProduct(int id) {
+        for (Product item : productList) {
+            if (item.getAvailableCount() != id)
+                item.viewProduct();
+        }
     }
 
     public void viewProduct() {
-        System.out.println("Product Name: " + productName);
-        System.out.println("Category: " + category);
-        System.out.println("Price: " + price);
-        System.out.println("Available Count: " + availableCount);
+        System.out.println("\n\nProduct id: " + productId + "\nProduct Name: " + productName + "\nCategory: " + category + "\nPrice: " + price + " Rs" + "\nAvailable Count: " + availableCount);
     }
 
     public static void availableProduct() {
-
+        for (Product item : productList) {
+            item.viewProduct();
+        }
     }
-}
 
-class MyClass {
     public static void main(String[] args) {
-        ArrayList<Product> productList = new ArrayList<>();
-        ArrayList<ArrayList<Product>> productdb = new ArrayList<>();
-        Product p1 = new Product(100, 10, "Food", "Soap");
-        Product p2 = new Product(100, 10, "Food", "Chocolate");
-        Product p3 = new Product(100, 10, "Food", "Biscuits");
 
-        p1.viewProduct();
-        System.out.println("");
-        p1.updatecount(2);
-        System.out.println("");
-        p1.viewProduct();
-
-
+        Product.addProduct("biscuits", "food", 10, 100);
+        Product.addProduct("Salt", "food", 10, 100);
+        Product.addProduct("biscuits", "food", 10, 100);
+        Product.addProduct("biscuits", "food", 10, 100);
+        Product.editProduct(2, 0);
+        Product.getProduct(0);
     }
+
 }

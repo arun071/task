@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class User {
-    private final String EmailId;
+    private static String EmailId;
     private String Password;
     private final static HashMap<String, String> db = new HashMap<>();
     private final static ArrayList<User> UserList = new ArrayList<>();
 
-    public String getEmailId() {
+    public static String getEmailId() {
         return EmailId;
     }
 
@@ -25,22 +26,30 @@ public class User {
         db.put(emailId, password);
     }
 
+    public static void addAdmin() {
+        UserList.add(new User("Admin", "1234"));
+    }
+
     public static void SignUp(String emailId, String password) {
         if (db.containsKey(emailId)) {
-            System.out.println("user already Registred go to signin");
+            System.out.println("user already Registered go to SignIn");
         } else {
             UserList.add(new User(emailId, password));
-            System.out.println("Account Created Sucessfully");
-            User.SignIn(emailId,password);
+            System.out.println("Account Created Successfully");
+            User.SignIn(emailId, password);
         }
     }
 
     public static void SignIn(String emailId, String password) {
         if (db.containsKey(emailId)) {
-            if (db.get(emailId).equals(password))
-                System.out.println(emailId.equals("admin") ? "Welcome AdminPanel " + emailId : "Welcome User " + emailId);
-            else
-                System.out.println("In correct Password");
+            if (db.get(emailId).equals(password)) {
+                if (emailId.equals("Admin"))
+                    Screen.AdminScreen();
+                else
+                    Screen.UserScreen();
+//                    System.out.println("Welcome User " + emailId);
+            } else
+                System.out.println("Incorrect Password");
         } else
             System.out.println("this Acc is Not Registered ... select option 1 for signup");
     }
@@ -54,13 +63,11 @@ public class User {
         }
         if (currentUser != null) {
             currentUser.setPassword(password);
-            db.replace(emailId,password);
-        }
-        else
+            db.replace(emailId, password);
+        } else
             System.out.println("User Not Found");
 
     }
-
 
     public void viewUser() {
         System.out.println("\nUser id: " + getEmailId());

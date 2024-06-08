@@ -1,20 +1,25 @@
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         System.out.println("Welcome to Amazon");
         Scanner sc = new Scanner(System.in);
         String email;
         String pass;
-        User.SignUp("Admin", "1234");
+        User.addAdmin();
+        Product.addProduct("Soap", "Bath", 30, 99);
+        Product.addProduct("Biscuits", "Food", 10, 19);
+        Product.addProduct("Cake", "Snack", 50, 2);
+        User.SignUp("arun", "1");
         while (true) {
             System.out.println(
                     "----------------------\nChoose a Option" +
-                            "\n1.For SignUp" +
-                            "\n2.For SigIn" +
-                            "\n3.For Forgot Password" +
-                            "\n4.For UserList" +
-                            "\n0.For Exit" +
+                            "\n1.SignUp" +
+                            "\n2.SigIn" +
+                            "\n3.Forgot Password" +
+                            "\n4.UserList" +
+                            "\n0.Exit" +
                             "\n----------------------");
             int opt = sc.nextInt();
             switch (opt) {
@@ -49,6 +54,7 @@ public class Main {
                     break;
                 default:
                     System.out.println("Invalid Choices");
+                    break;
             }
         }
     }

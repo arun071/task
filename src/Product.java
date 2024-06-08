@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Product {
     private String productName;
@@ -9,7 +10,7 @@ public class Product {
     private static int genrateId = 1;
 
     static ArrayList<Product> productList = new ArrayList<>();
-
+    static HashMap<String, Integer> bills = new HashMap<>();
 
     Product(String productName, String Category, int price, int availableCount) {
         this.price = price;
@@ -21,10 +22,6 @@ public class Product {
 
     public String getProductName() {
         return productName;
-    }
-
-    public String getCategory() {
-        return category;
     }
 
     public int getPrice() {
@@ -51,13 +48,13 @@ public class Product {
         this.availableCount = availableCount;
     }
 
-
     private int getProductId() {
         return productId;
     }
 
     public static void addProduct(String productName, String Category, int price, int availableCount) {
         productList.add(new Product(productName, Category, price, availableCount));
+        System.out.println("Product: " + productName + " Added Successfully");
     }
 
     public static void editProduct(int inputId, String name, String category, int price, int availableCount) {
@@ -72,6 +69,38 @@ public class Product {
             P.setCategory(category);
             P.setPrice(price);
             P.setAvailableCount(availableCount);
+        }
+    }
+
+    public static int buyProduct(int inputId, int Count) {
+        Product P = null;
+        for (Product item : productList) {
+            if (item.getProductId() == inputId) {
+                P = item;
+            }
+        }
+        if (P != null) {
+            if (P.getAvailableCount() >= Count) {
+                int amt = P.getPrice() * Count;
+                System.out.println(P.getProductName() + " " + Count + " * " + P.getPrice() + " = " + amt);
+                P.setAvailableCount(P.getAvailableCount() - Count);
+                return amt;
+            } else
+                System.out.println("Invalid Count");
+        }
+        return 0;
+    }
+
+    public static void deleteProduct(int inputId) {
+        Product P = null;
+        for (Product item : productList) {
+            if (item.getProductId() == inputId) {
+                P = item;
+            }
+        }
+        if (P != null) {
+            productList.remove(P.getProductId() - 1);
+            System.out.println(P.getProductName() + " is Deleted Successfully");
         }
     }
 
@@ -94,25 +123,21 @@ public class Product {
         }
     }
 
+    public static void getBills(String Email) {
+        if (bills.containsKey(Email)) {
+            System.out.println(bills.get(Email));
+        }
+    }
+
     public void viewProduct() {
         System.out.println("\n\nProduct id: " + productId + "\nProduct Name: " + productName + "\nCategory: " + category + "\nPrice: " + price + " Rs" + "\nAvailable Count: " + availableCount);
     }
 
     public static void availableProduct() {
         for (Product item : productList) {
-            item.viewProduct();
+            if (item.getAvailableCount() > 0)
+                item.viewProduct();
         }
-    }
-
-    public static void main(String[] args) {
-
-        Product.addProduct("biscuits", "food", 10, 100);
-        Product.addProduct("Salt", "food", 10, 100);
-        Product.addProduct("biscuits", "food", 10, 100);
-        Product.addProduct("biscuits", "food", 10, 100);
-        Product.editProduct(2, 0);
-//        Product.getProduct(0);
-        Product.availableProduct();
     }
 
 }

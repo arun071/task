@@ -111,7 +111,8 @@ public class Product {
         Product.addProduct("biscuits", "food", 10, 100);
         Product.addProduct("biscuits", "food", 10, 100);
         Product.editProduct(2, 0);
-        Product.getProduct(0);
+//        Product.getProduct(0);
+        Product.availableProduct();
     }
 
 }
